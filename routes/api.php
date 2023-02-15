@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Routing\Router;
+use App\Http\Controllers\Api\{WebsiteSettingController,FilesController};
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +18,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+
+Route::group(['middleware' => 'XSS'], function (Router $router) {
+
+    $router->apiResources([
+        'website-setting' => WebsiteSettingController::class,
+    ]);
+
+    // Files Uploader
+    Route::post('files', [FilesController::class, 'store']);
 });

@@ -4,4 +4,7 @@
 3.  composer install
 4. npm install
 5. npm run dev
-6. php artisan serve
+6. cp .env.example .env
+7. change database credentials
+8. php artisan migrate --seed
+9php artisan serve
