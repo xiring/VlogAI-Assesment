@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use Image;
 use Throwable;
 use App\Models\WebsiteSetting;
 use App\Http\Controllers\Controller;
@@ -32,12 +33,20 @@ class WebsiteSettingController extends Controller
         try {
             $image = get_image_from_unsplash($request->header_background_image);
             $validated = $request->validated();
+            $imageName = time() . '.' . $image->extension();
+            $request->image->storeAs('images', $imageName);
             $data = $request->only(['name','website','facebook','twitter','instagram','logo']);
-            $data['header_background_image'] = $image;
+            $imageContent = file_get_contents($image);
+            \Illuminate\Support\Facades\Storage::disk('public')->put('image.jpeg',$imageContent);
+            $data['header_background_image'] = 'storage/image.jpeg';
             $websitesetting = WebsiteSetting::updateOrCreate( ['id' => 1],$data);
             return new GlobalResource($websitesetting);
         } catch (Throwable $e) {
             return $this->respondError($e->getMessage());
         }
+    }
+
+    public function show(WebsiteSetting $websiteSetting){
+        return $websiteSetting;
     }
 }

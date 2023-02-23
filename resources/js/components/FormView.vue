@@ -4,6 +4,7 @@ import {ref, reactive, onMounted} from "vue";
 import type { FormInstance, FormRules } from "element-plus";
 import { ElMessage } from "element-plus";
 import Upload from "./Uploads/SingleImage.vue";
+import Image from "./ImageView.vue";
 
 import ApiResource from "@/api/api";
 
@@ -44,19 +45,15 @@ const rules = reactive<FormRules>({
     ],
     website: [
         { required: true, message: "Website is required", trigger: "blur" },
-        { type: "url", message: "Type should be url", trigger: "blur" },
     ],
     facebook: [
         { required: true, message: "Website is required", trigger: "blur" },
-        { type: "url", message: "Type should be url", trigger: "blur" },
     ],
     twitter: [
         { required: true, message: "Website is required", trigger: "blur" },
-        { type: "url", message: "Type should be url", trigger: "blur" },
     ],
     instagram: [
         { required: true, message: "Website is required", trigger: "blur" },
-        { type: "url", message: "Type should be url", trigger: "blur" },
     ],
     logo: [
         { required: true, message: "Logo is required", trigger: "blur" },
@@ -149,7 +146,7 @@ onMounted(() => {
             <el-table-column min-width="55" prop="header_background_image" label="Background Image">
                 <template #default="scope">
                     <img
-                        :src="scope.row.header_background_image"
+                        :src="scope.row.image_full_path"
                         width="50"
                         height="40"
                         alt=""
@@ -167,5 +164,6 @@ onMounted(() => {
                 </template>
             </el-table-column>
         </el-table>
+        <Image></Image>
     </div>
 </template>

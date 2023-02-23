@@ -26,7 +26,7 @@ class WebsiteSetting extends Model
     /**
      * @var string[]
      */
-    protected $appends = ['logo_full_path'];
+    protected $appends = ['logo_full_path', 'image_full_path'];
 
     /**
      * @return string
@@ -34,5 +34,10 @@ class WebsiteSetting extends Model
     public function getLogoFullPathAttribute()
     {
         return asset($this->logo);
+    }
+
+    public function getImageFullPathAttribute()
+    {
+        return asset($this->header_background_image);
     }
 }
